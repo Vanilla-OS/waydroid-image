@@ -51,7 +51,7 @@ ewaydroid --help
 - <a name="note1">1</a>: At the time of writing, the `--unshare-all` option is not yet released
 so you need to use the latest version from git.
 
-- <a name="note2">2</a>: The `ewaydroid` script is a wrapper around `waydroid-cli` that
+- <a name="note2">2</a>: The `ewaydroid` script is a wrapper around `waydroid` that
 automatically points the `XDG_RUNTIME_DIR` and `DBUS_SESSION_BUS_ADDRESS` environment
 variables to the host ones. This is needed to make the waydroid services work by
 properly communicating with the host.
