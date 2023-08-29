@@ -13,6 +13,8 @@ modules:
   type: apt
   source:
     packages:
+    - systemd
+    - libpam-systemd
     - curl
     - kmod
 
