@@ -19,6 +19,7 @@ modules:
     - kmod
     - dbus-x11
     - iptables
+    - mutter
 
 - name: waydroid-repo
   type: shell
