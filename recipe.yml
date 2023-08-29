@@ -17,6 +17,8 @@ modules:
     - libpam-systemd
     - curl
     - kmod
+    - dbus-x11
+    - iptables
 
 - name: waydroid-repo
   type: shell
@@ -30,3 +32,10 @@ modules:
   source:
     packages:
     - waydroid
+
+- name: set-environment
+  type: shell
+  commands:
+    - rm -rf /lib/modules
+    - ln -sf /run/host/lib/modules /lib/modules
+    - chmod +x /usr/bin/ewaydroid
