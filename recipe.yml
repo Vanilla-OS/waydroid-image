@@ -1,0 +1,30 @@
+base: ghcr.io/vanilla-os/pico:main
+name: Waydroid
+id: waydroid
+labels:
+  maintainer: Vanilla OS Contributors
+args:
+  DEBIAN_FRONTEND: noninteractive
+runs:
+- echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
+
+modules:
+- name: dependencies
+  type: apt
+  source:
+    packages:
+    - curl
+    - kmod
+
+- name: waydroid-repo
+  type: shell
+  commands:
+    - curl --progress-bar --proto '=https' --tlsv1.2 -Sf https://repo.waydro.id/waydroid.gpg --output /usr/share/keyrings/waydroid.gpg
+    - echo "deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ bookworm main" | tee /etc/apt/sources.list.d/waydroid.list
+    - apt update
+
+- name: waydroid
+  type: apt
+  source:
+    packages:
+    - waydroid
