@@ -27,7 +27,7 @@ podman image build -t vanillaos/waydroid .
 
 - Podman or Docker 
 - [Distrobox](https://github.com/89luca89/distrobox) (suggested) [1](#note1)
-- [binder_linux, ashmem_linux](https://github.com/choff/anbox-modules) installed on host
+- [binder_linux](https://github.com/choff/anbox-modules) installed on host
 
 ### Usage
 
