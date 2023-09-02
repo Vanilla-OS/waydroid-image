@@ -1,0 +1,12 @@
+[Unit]
+Description=Start the Waydroid container
+After=waydroid-init.service
+Requires=waydroid-init.service
+
+[Service]
+User=root
+WorkingDirectory=/root
+ExecStart=/ewaydroid session start
+
+[Install]
+WantedBy=multi-user.target

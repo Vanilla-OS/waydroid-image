@@ -41,3 +41,4 @@ modules:
     - ln -sf /run/host/lib/modules /lib/modules
     - chmod +x /usr/bin/ewaydroid
     - ln -s /etc/systemd/system/waydroid-init.service /etc/systemd/system/multi-user.target.wants/waydroid-init.service
+    - ln -s /etc/systemd/system/waydroid-bg.service /etc/systemd/system/multi-user.target.wants/waydroid-bg.service

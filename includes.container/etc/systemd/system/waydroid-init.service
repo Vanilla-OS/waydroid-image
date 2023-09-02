@@ -5,7 +5,6 @@ Description=Initialize the Waydroid container
 User=root
 WorkingDirectory=/root
 ExecStart=waydroid init
-ExecStartPost=/bin/sh -c 'echo $? > /etc/waydroid.status'
 
 [Install]
 WantedBy=multi-user.target
