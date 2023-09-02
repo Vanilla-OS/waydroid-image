@@ -16,9 +16,4 @@ done
 export XDG_RUNTIME_DIR="/run/host/${XDG_RUNTIME_DIR}"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/host/$(echo "${DBUS_SESSION_BUS_ADDRESS}" | cut -d '=' -f2-)"
 
-if [ "$1" = "check-init" ]; then
-    echo "Waydroid is initialized"
-    exit 0
-else
-    waydroid "$@"
-fi
+waydroid "$@"
