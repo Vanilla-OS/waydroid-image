@@ -12,7 +12,7 @@ installation.
 ### Requirements
 
 - [Vib](https://github.com/Vanilla-OS/Vib)
-- Podman or Docker 
+- Podman or Docker
 
 ## Build the image
 
@@ -25,7 +25,7 @@ podman image build -t vanillaos/waydroid .
 
 ### Requirements
 
-- Podman or Docker 
+- Podman or Docker
 - [Distrobox](https://github.com/89luca89/distrobox) (suggested) [1](#note1)
 - [binder_linux](https://github.com/choff/anbox-modules) installed on host
 
