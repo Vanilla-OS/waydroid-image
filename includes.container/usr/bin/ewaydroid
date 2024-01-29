@@ -1,18 +1,6 @@
 #!/bin/bash
 # Waydroid wrapper with the proper environment
 
-echo "Checking if Waydroid was initialized..."
-
-while systemctl is-active waydroid-init >/dev/null; do
-    animation="Waiting for Waydroid initialization to complete"
-    for i in {1..3}; do
-        echo -ne "$animation...   \r"
-        sleep 1
-        animation="$animation."
-    done
-    echo -ne "\r\033[K"
-done
-
 export XDG_RUNTIME_DIR="/run/host/${XDG_RUNTIME_DIR}"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/host/$(echo "${DBUS_SESSION_BUS_ADDRESS}" | cut -d '=' -f2-)"
 
