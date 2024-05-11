@@ -4,6 +4,7 @@
 export XDG_RUNTIME_DIR="/run/host/${XDG_RUNTIME_DIR}"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/host/$(echo "${DBUS_SESSION_BUS_ADDRESS}" | cut -d '=' -f2-)"
 
+touch ~/.config/waydroid-props
 source ~/.config/waydroid-props
 
 if [[ "$1" != "init" && ! $# -eq 0 ]]; then
