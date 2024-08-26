@@ -24,6 +24,7 @@ stages:
         - dbus-x11
         - iptables
         - mutter
+        - python3
 
     - name: distrobox-init-pkgs
       type: apt
