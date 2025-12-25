@@ -1,102 +1,54 @@
-name: Waydroid
+name: Vanilla Desktop Waydroid
 id: waydroid
 stages:
 - id: build
-  base: ghcr.io/vanilla-os/pico:main
+  base: ghcr.io/vanilla-os/desktop:dev
   singlelayer: false
   labels:
     maintainer: Vanilla OS Contributors
   args:
     DEBIAN_FRONTEND: noninteractive
   runs:
-  - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
+    commands:
+      - echo 'APT::Install-Recommends "1";' > /etc/apt/apt.conf.d/01norecommends
 
   modules:
-    - name: dependencies
-      type: apt
-      source:
-        packages:
-        - systemd
-        - libpam-systemd
-        - curl
-        - kmod
-        - dbus-x11
-        - iptables
-        - mutter
+  - name: init-setup
+    type: shell
+    commands:
+    - lpkg --unlock
+    - apt update
 
-    - name: distrobox-init-pkgs
-      type: apt
-      source:
-        packages:
-          - apt-utils
-          - bash-completion
-          - bc
-          - bzip2
-          - curl
-          - dialog
-          - diffutils
-          - findutils
-          - iproute2
-          - gnupg
-          - gnupg2
-          - gpgsm
-          - libkrb5-3
-          - libcap2-bin
-          - hostname
-          - iputils-ping
-          - less
-          - keyutils
-          - libnss-mdns
-          - libnss-myhostname
-          - libvte-2.9*-common
-          - libvte-common
-          - locales
-          - locales-all
-          - man-db
-          - manpages
-          - mtr
-          - lsof
-          - ncurses-base
-          - passwd
-          - pinentry-curses
-          - openssh-client
-          - procps
-          - sudo
-          - pigz
-          - time
-          - rsync
-          - tzdata
-          - util-linux
-          - wget
-          - unzip
-          - zip
-          - xauth
-          - tree
-          - tcpdump
-          - traceroute
-          - xz-utils
-          - libgl1
-          - libegl1
-          - libglx-mesa0
-          - libvulkan1
-          - mesa-vulkan-drivers
+  - name: waydroid-repo
+    type: shell
+    commands:
+      - curl --progress-bar --proto '=https' --tlsv1.2 -Sf https://repo.waydro.id/waydroid.gpg --output /usr/share/keyrings/waydroid.gpg
+      - echo "deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ sid main" | tee /etc/apt/sources.list.d/waydroid.list
+      - apt update
 
-    - name: waydroid-repo
-      type: shell
-      commands:
-        - curl --progress-bar --proto '=https' --tlsv1.2 -Sf https://repo.waydro.id/waydroid.gpg --output /usr/share/keyrings/waydroid.gpg
-        - echo "deb [signed-by=/usr/share/keyrings/waydroid.gpg] https://repo.waydro.id/ bookworm main" | tee /etc/apt/sources.list.d/waydroid.list
-        - apt update
+  - name: waydroid
+    type: apt
+    source:
+      packages:
+      - waydroid
 
-    - name: waydroid
-      type: apt
-      source:
-        packages:
-        - waydroid
+  - name: cleanup
+    type: shell
+    commands:
+    - apt autoremove -y
+    - apt clean
+    - lpkg --lock
 
-    - name: set-environment
-      type: shell
-      commands:
-        - rm -rf /lib/modules
-        - ln -sf /run/host/lib/modules /lib/modules
-        - chmod +x /usr/bin/ewaydroid
+  - name: fsguard
+    type: fsguard
+    FsGuardLocation: "/usr/sbin/FsGuard"
+    CustomFsGuard: false
+    GenerateKey: true
+    FilelistPaths: ["/usr/bin"]
+    modules:
+      - name: remove-prev-fsguard
+        type: shell
+        commands:
+          - rm -rf /FsGuard
+          - rm -f ./minisign.pub ./minisign.key
+          - chmod +x /usr/sbin/init
