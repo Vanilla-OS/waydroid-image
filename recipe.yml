@@ -1,5 +1,7 @@
 name: Vanilla Desktop Waydroid
 id: waydroid
+vibversion: 1.0.6
+
 stages:
 - id: build
   base: ghcr.io/vanilla-os/desktop:dev
@@ -28,9 +30,9 @@ stages:
 
   - name: waydroid
     type: apt
-    source:
-      packages:
-      - waydroid
+    sources:
+      - packages:
+        - waydroid
 
   - name: cleanup
     type: shell
